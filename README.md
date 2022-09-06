@@ -32,3 +32,9 @@ Or
 ```
 $ java -jar /home/jaruga/.dockstore/libraries/cromwell-77.jar run /home/jaruga/git/dockstore-cli-docker-test/hello-docker.wdl
 ```
+
+Created the `cronmell.log` like this.
+
+```
+$ java -jar /home/jaruga/.dockstore/libraries/cromwell-77.jar run /home/jaruga/git/dockstore-cli-docker-test/hello-docker.wdl 2>&1 | tee cronmell.log
+```
