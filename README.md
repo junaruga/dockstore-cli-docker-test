@@ -1,6 +1,7 @@
 # dockstore-cli-docker-test
 
-hello-docker.wdl: Copied from <https://github.com/openwdl/learn-wdl/blob/master/1_script_examples/1_hello_worlds/2_hello_docker/hello-docker.wdl>.
+* hello-docker.wdl: Copied from <https://github.com/openwdl/learn-wdl/blob/master/1_script_examples/1_hello_worlds/2_hello_docker/hello-docker.wdl>.
+* cromwell-executions/: executing logs after running `java -jar /home/jaruga/.dockstore/libraries/cromwell-77.jar run /home/jaruga/git/dockstore-cli-docker-test/hello-docker.wdl`.
 
 ## My environment
 

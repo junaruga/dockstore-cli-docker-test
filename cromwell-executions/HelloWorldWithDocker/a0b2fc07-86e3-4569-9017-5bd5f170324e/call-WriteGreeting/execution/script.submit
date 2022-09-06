@@ -1,0 +1,20 @@
+#!/bin/bash
+# make sure there is no preexisting Docker CID file
+rm -f /home/jaruga/git/dockstore-cli-docker-test/cromwell-executions/HelloWorldWithDocker/a0b2fc07-86e3-4569-9017-5bd5f170324e/call-WriteGreeting/execution/docker_cid
+# run as in the original configuration without --rm flag (will remove later)
+docker run \
+  --cidfile /home/jaruga/git/dockstore-cli-docker-test/cromwell-executions/HelloWorldWithDocker/a0b2fc07-86e3-4569-9017-5bd5f170324e/call-WriteGreeting/execution/docker_cid \
+  -i \
+   \
+  --entrypoint /bin/bash \
+  -v /home/jaruga/git/dockstore-cli-docker-test/cromwell-executions/HelloWorldWithDocker/a0b2fc07-86e3-4569-9017-5bd5f170324e/call-WriteGreeting:/cromwell-executions/HelloWorldWithDocker/a0b2fc07-86e3-4569-9017-5bd5f170324e/call-WriteGreeting:delegated \
+  ubuntu@sha256:2d7ecc9c5e08953d586a6e50c29b91479a48f69ac1ba1f9dc0420d18a728dfc5 /cromwell-executions/HelloWorldWithDocker/a0b2fc07-86e3-4569-9017-5bd5f170324e/call-WriteGreeting/execution/script
+
+# get the return code (working even if the container was detached)
+rc=$(docker wait `cat /home/jaruga/git/dockstore-cli-docker-test/cromwell-executions/HelloWorldWithDocker/a0b2fc07-86e3-4569-9017-5bd5f170324e/call-WriteGreeting/execution/docker_cid`)
+
+# remove the container after waiting
+docker rm `cat /home/jaruga/git/dockstore-cli-docker-test/cromwell-executions/HelloWorldWithDocker/a0b2fc07-86e3-4569-9017-5bd5f170324e/call-WriteGreeting/execution/docker_cid`
+
+# return exit code
+exit $rc
