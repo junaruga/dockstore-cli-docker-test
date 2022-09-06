@@ -1,0 +1,37 @@
+#!/bin/bash
+
+cd /cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution
+tmpDir=$(mkdir -p "/cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/tmp.3c3e479e" && echo "/cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/tmp.3c3e479e")
+chmod 777 "$tmpDir"
+export _JAVA_OPTIONS=-Djava.io.tmpdir="$tmpDir"
+export TMPDIR="$tmpDir"
+export HOME="$HOME"
+(
+cd /cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution
+
+)
+out3d200d74="${tmpDir}/out.$$" err3d200d74="${tmpDir}/err.$$"
+mkfifo "$out3d200d74" "$err3d200d74"
+trap 'rm "$out3d200d74" "$err3d200d74"' EXIT
+touch '/cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution/stdout' '/cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution/stderr'
+tee '/cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution/stdout' < "$out3d200d74" &
+tee '/cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution/stderr' < "$err3d200d74" >&2 &
+(
+cd /cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution
+
+
+echo "Hello Docker"
+)  > "$out3d200d74" 2> "$err3d200d74"
+echo $? > /cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution/rc.tmp
+(
+# add a .file in every empty directory to facilitate directory delocalization on the cloud
+cd /cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution
+find . -type d -exec sh -c '[ -z "$(ls -A '"'"'{}'"'"')" ] && touch '"'"'{}'"'"'/.file' \;
+)
+(
+cd /cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution
+sync
+
+
+)
+mv /cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution/rc.tmp /cromwell-executions/HelloWorldWithDocker/3d200d74-77eb-45d8-8fe6-b41b14aab6f6/call-WriteGreeting/execution/rc
